@@ -8,11 +8,8 @@ Welcome to python-binance-chain v0.1.20
 .. image:: https://img.shields.io/pypi/l/python-binance-chain.svg
     :target: https://pypi.python.org/pypi/python-binance-chain
 
-.. image:: https://img.shields.io/travis/sammchardy/python-binance-chain.svg
-    :target: https://travis-ci.org/sammchardy/python-binance-chain
-
-.. image:: https://img.shields.io/coveralls/sammchardy/python-binance-chain.svg
-    :target: https://coveralls.io/github/sammchardy/python-binance-chain
+.. image:: https://github.com/mchardysam/python-binance-chain/actions/workflows/test.yml/badge.svg
+    :target: https://github.com/mchardysam/python-binance-chain/actions/workflows/test.yml
 
 .. image:: https://img.shields.io/pypi/wheel/python-binance-chain.svg
     :target: https://pypi.python.org/pypi/python-binance-chain
@@ -27,7 +24,7 @@ PyPi
   https://pypi.python.org/pypi/python-binance-chain
 
 Source code
-  https://github.com/sammchardy/python-binance-chain
+  https://github.com/mchardysam/python-binance-chain
 
 
 Features
@@ -45,7 +42,7 @@ Features
 - `Sign transactions <#sign-transaction>`_ and use the signed message how you want
 - `Ledger hardware wallet <#ledger>`_ device (Ledger Blue, Nano S & Nano X) support for signing messages
 - Async `Depth Cache <#depth-cache>`_ to keep a copy of the order book locally
-- `Signing Service Support <#signing-service>`_ for `binance-chain-signing-service <https://github.com/sammchardy/binance-chain-signing-service>`_
+- `Signing Service Support <#signing-service>`_ for `binance-chain-signing-service <https://github.com/mchardysam/binance-chain-signing-service>`_
 - Support for HTTP and HTTPS proxies and to override `Requests and AioHTTP settings <requests-and-aiohttp-settings>`_
 - `UltraJson <https://github.com/esnme/ultrajson>`_ the ultra fast JSON parsing library for efficient message handling
 - Strong Python3 typing to reduce errors
@@ -859,7 +856,7 @@ The service holds the private keys of the accounts and supplies a username and p
 
 This client re-uses the binance_chain.messages types. In this case no wallet parameter is required.
 
-This client interacts with the `binance-chain-signing-service <https://github.com/sammchardy/binance-chain-signing-service>`_ read the docs there
+This client interacts with the `binance-chain-signing-service <https://github.com/mchardysam/binance-chain-signing-service>`_ read the docs there
 to create our own signing service.
 
 **Signing and then broadcasting**
@@ -1090,11 +1087,29 @@ Running Tests
 
 .. code-block:: bash
 
-    git clone https://github.com/sammchardy/python-binance-chain.git
+    git clone https://github.com/mchardysam/python-binance-chain.git
     cd python-binance-chain
+    pip install -r requirements.txt
     pip install -r test-requirements.txt
 
+    # unit tests only, no network access required
+    python -m pytest tests/ -m "not integration"
+
+    # the full suite, including tests that need a live Binance Chain node
     python -m pytest tests/
+
+
+Regenerating Protobuf
+---------------------
+
+The transaction schema lives in ``binance_chain/protobuf/dex.proto``. If you need to
+regenerate ``dex_pb2.py``:
+
+.. code-block:: bash
+
+    pip install grpcio-tools
+    python -m grpc_tools.protoc -I binance_chain/protobuf \
+        --python_out=binance_chain/protobuf binance_chain/protobuf/dex.proto
 
 
 Donate
@@ -1120,4 +1135,4 @@ If you use `Binance <https://www.binance.com/?ref=10099792>`_ check out my `pyth
 
 If you use `Kucoin <https://www.kucoin.com/?rcode=E42cWB>`_ check out my `python-kucoin <https://github.com/sammchardy/python-kucoin>`_ library.
 
-If you use `IDEX <https://idex.market>`_ check out my `python-idex <https://github.com/sammchardy/python-idex>`_ library.
+If you use `IDEX <https://idex.market>`_ check out my `python-idex <https://github.com/mchardysam/python-idex>`_ library.

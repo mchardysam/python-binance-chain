@@ -10,6 +10,7 @@ from binance_chain.wallet import Wallet
 from binance_chain.constants import PeerType
 
 
+@pytest.mark.integration
 class TestHttpRpcClient:
 
     peers = None
@@ -49,6 +50,7 @@ class TestHttpRpcClient:
         assert rpcclient.get_block(10000)
 
 
+@pytest.mark.integration
 class TestAsyncHttpRpcClient:
 
     peers = None
@@ -75,7 +77,6 @@ class TestAsyncHttpRpcClient:
             self.peers = httpclient.get_peers(peer_type=PeerType.NODE)
         return self.peers[0]['listen_addr']
 
-    @pytest.mark.asyncio
     @pytest.fixture
     async def rpcclient(self, listen_address):
         return await AsyncHttpRpcClient.create(endpoint_url=listen_address)

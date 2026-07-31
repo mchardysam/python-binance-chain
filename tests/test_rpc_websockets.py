@@ -6,6 +6,7 @@ from binance_chain.node_rpc.websockets import ReconnectingRpcWebsocket, Websocke
 from binance_chain.environment import BinanceEnvironment
 
 
+@pytest.mark.integration
 class TestRpcWebsockets:
 
     peers = None

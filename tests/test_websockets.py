@@ -5,6 +5,7 @@ from binance_chain.websockets import BinanceChainSocketManager, ReconnectingWebs
 from binance_chain.environment import BinanceEnvironment
 
 
+@pytest.mark.integration
 class TestWebsockets:
 
     @pytest.fixture()

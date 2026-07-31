@@ -12,6 +12,7 @@ class TestHttpSigningClient:
         assert HttpApiSigningClient('https://binance-signing-service.com', 'sam', 'mypass')
 
 
+@pytest.mark.integration
 class TestAsyncHttpSigningClient:
 
     @mock.patch('binance_chain.signing.http.AsyncHttpApiSigningClient.authenticate')

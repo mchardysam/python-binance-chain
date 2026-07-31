@@ -4,6 +4,7 @@ from binance_chain.node_rpc.pooled_client import PooledRpcClient
 from binance_chain.environment import BinanceEnvironment
 
 
+@pytest.mark.integration
 class TestRpcPooled:
 
     @pytest.fixture()

@@ -95,6 +95,7 @@ class TestDepthCache:
         assert len(dc.get_bids()) == 0
 
 
+@pytest.mark.integration
 class TestDepthCacheConnection:
 
     @pytest.fixture()

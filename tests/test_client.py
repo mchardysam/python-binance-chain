@@ -10,6 +10,7 @@ from binance_chain.constants import PeerType, OrderSide, OrderType, TransactionS
 from binance_chain.environment import BinanceEnvironment
 
 
+@pytest.mark.integration
 class TestClient:
 
     @pytest.fixture
@@ -160,6 +161,7 @@ class TestClient:
             assert res == {"message": "success"}
 
 
+@pytest.mark.integration
 class TestAsyncClient:
 
     @pytest.fixture
@@ -167,7 +169,6 @@ class TestAsyncClient:
         return BinanceEnvironment.get_testnet_env()
 
     @pytest.fixture
-    @pytest.mark.asyncio
     async def httpclient(self, env, event_loop):
         return await AsyncHttpApiClient.create(loop=event_loop, env=env, requests_params={'timeout': 1})
 

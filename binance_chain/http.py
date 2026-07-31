@@ -80,7 +80,7 @@ class BaseApiClient:
 
         if kwargs['data'] and method == 'get':
             kwargs['params'] = kwargs['data']
-            del(kwargs['data'])
+            del kwargs['data']
 
         if method == 'post':
             kwargs['headers']['content-type'] = 'text/plain'
@@ -371,7 +371,7 @@ class HttpApiClient(BaseApiClient):
 
         req_path = 'broadcast'
         if sync:
-            req_path += f'?sync=1'
+            req_path += '?sync=1'
 
         res = self._post(req_path, data=data)
         msg.wallet.increment_account_sequence()
@@ -419,7 +419,7 @@ class HttpApiClient(BaseApiClient):
         """
         req_path = 'broadcast'
         if sync:
-            req_path += f'?sync=1'
+            req_path += '?sync=1'
 
         res = self._post(req_path, data=hex_msg)
         return res
@@ -864,7 +864,7 @@ class AsyncHttpApiClient(BaseApiClient):
 
         req_path = 'broadcast'
         if sync:
-            req_path += f'?sync=1'
+            req_path += '?sync=1'
 
         res = await self._post(req_path, data=data)
         msg.wallet.increment_account_sequence()
@@ -874,7 +874,7 @@ class AsyncHttpApiClient(BaseApiClient):
     async def broadcast_hex_msg(self, hex_msg: str, sync: bool = False):
         req_path = 'broadcast'
         if sync:
-            req_path += f'?sync=1'
+            req_path += '?sync=1'
 
         res = await self._post(req_path, data=hex_msg)
         return res

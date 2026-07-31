@@ -1,4 +1,3 @@
-import math
 from decimal import Decimal
 from typing import Union
 
@@ -9,7 +8,7 @@ def encode_number(num: Union[float, Decimal]) -> int:
     :param num: number to encode
 
     """
-    if type(num) == Decimal:
+    if type(num) is Decimal:
         return int(num * (Decimal(10) ** 8))
     else:
         return int(round(num * 1e8))

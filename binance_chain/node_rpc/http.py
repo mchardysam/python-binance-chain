@@ -58,7 +58,7 @@ class BaseHttpRpcClient:
 
         if kwargs['data'] and method == 'get':
             kwargs['params'] = kwargs['data']
-            del(kwargs['data'])
+            del kwargs['data']
 
         if method == 'post':
             kwargs['headers']['content-type'] = 'text/plain'

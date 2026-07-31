@@ -41,7 +41,7 @@ class Msg:
 
     def to_amino(self):
         proto = self.to_protobuf()
-        if type(proto) != bytes:
+        if type(proto) is not bytes:
             proto = proto.SerializeToString()
 
         # wrap with type
@@ -149,7 +149,7 @@ class NewOrderMsg(Msg):
         ])
 
     def to_sign_dict(self) -> Dict:
-        return{
+        return {
             'order_type': self._order_type,
             'price': self._price,
             'quantity': self._quantity,

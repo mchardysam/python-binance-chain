@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package transaction;
+
+option java_package = "com.binance.dex.api.proto";
+option java_outer_classname = "Transaction";
+option java_multiple_files = true;
+
+message StdTx {
+  repeated bytes msgs = 1;
+  repeated bytes signatures = 2;
+  string memo = 3;
+  int64 source = 4;
+  bytes data = 5;
+}
+
+message StdSignature {
+  message PubKey {}
+  bytes pub_key = 1;
+  bytes signature = 2;
+  int64 account_number = 3;
+  int64 sequence = 4;
+}
+
+message NewOrder {
+  bytes sender = 1;
+  string id = 2;
+  string symbol = 3;
+  int64 ordertype = 4;
+  int64 side = 5;
+  int64 price = 6;
+  int64 quantity = 7;
+  int64 timeinforce = 8;
+}
+
+message CancelOrder {
+  bytes sender = 1;
+  string symbol = 2;
+  string refid = 3;
+}
+
+message TokenFreeze {
+  bytes from = 1;
+  string symbol = 2;
+  int64 amount = 3;
+}
+
+message TokenUnfreeze {
+  bytes from = 1;
+  string symbol = 2;
+  int64 amount = 3;
+}
+
+message Token {
+  string denom = 1;
+  int64 amount = 2;
+}
+
+message Input {
+  bytes address = 1;
+  repeated Token coins = 2;
+}
+
+message Output {
+  bytes address = 1;
+  repeated Token coins = 2;
+}
+
+message Send {
+  repeated Input inputs = 1;
+  repeated Output outputs = 2;
+}
+
+message Vote {
+  int64 proposal_id = 1;
+  bytes voter = 2;
+  int64 option = 3;
+}

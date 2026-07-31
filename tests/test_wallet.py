@@ -27,6 +27,7 @@ class TestWallet:
         assert wallet.public_key_hex == b'02cce2ee4e37dc8c65d6445c966faf31ebfe578a90695138947ee7cab8ae9a2c08'
         assert wallet.address == 'tbnb10a6kkxlf823w9lwr6l9hzw4uyphcw7qzrud5rr'
 
+    @pytest.mark.integration
     def test_wallet_initialise(self, private_key, env):
 
         wallet = Wallet(private_key=private_key, env=env)
@@ -44,6 +45,25 @@ class TestWallet:
         assert wallet.private_key == private_key
         assert wallet.public_key_hex == b'02cce2ee4e37dc8c65d6445c966faf31ebfe578a90695138947ee7cab8ae9a2c08'
         assert wallet.address == 'tbnb10a6kkxlf823w9lwr6l9hzw4uyphcw7qzrud5rr'
+
+    def test_initialise_from_mnemonic_child_id(self, private_key, mnemonic, env):
+        # child 0 is the default and must match the plain mnemonic derivation
+        assert Wallet.create_wallet_from_mnemonic(mnemonic, child=0, env=env).private_key == private_key
+
+        # each child id must derive its own distinct key
+        child_1 = Wallet.create_wallet_from_mnemonic(mnemonic, child=1, env=env)
+        assert child_1.private_key == 'ea7123859bc54d9eeac1aa1af48093569efa781535571591d9b4b76fd6dd26f2'
+        assert child_1.address == 'tbnb1yqprw3vkaw72vaw4yws0adxq6qw5nunzny0tvt'
+
+        child_2 = Wallet.create_wallet_from_mnemonic(mnemonic, child=2, env=env)
+        assert child_2.private_key == 'e5319a7a9a2d961879b3a5960922535875bbd7c9aa7e0627f6d9a8112bffeabb'
+        assert child_2.address == 'tbnb17y34wwxnl9drc6rc30djjpspkrjuhhnk7ffr4y'
+
+    def test_initialise_from_mnemonic_private_key_is_padded(self, mnemonic, env):
+        # secret exponents shorter than 32 bytes must still hex encode to 64 chars
+        for child in range(25):
+            wallet = Wallet.create_wallet_from_mnemonic(mnemonic, child=child, env=env)
+            assert len(wallet.private_key) == 64
 
     def test_initialise_from_random_mnemonic(self, env):
         wallet = Wallet.create_random_wallet(env=env)
@@ -73,6 +93,7 @@ class TestWallet:
 
         assert wallet.sequence == 99
 
+    @pytest.mark.integration
     def test_wallet_reload_sequence(self, private_key, env):
         wallet = Wallet(private_key=private_key, env=env)
 
@@ -85,6 +106,7 @@ class TestWallet:
 
         assert wallet.sequence == account_sequence
 
+    @pytest.mark.integration
     def test_generate_order_id(self, private_key, env):
         wallet = Wallet(private_key=private_key, env=env)
 
